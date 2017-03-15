@@ -833,7 +833,6 @@ xViewer.prototype._initMouseEvents = function () {
 
         //if it was a longer movement do not perform picking
         if (deltaX < 3 && deltaY < 3 && button == 'left') {
-
             var handled = false;
             viewer._plugins.forEach(function (plugin) {
                 if (!plugin.onBeforePick) {
@@ -863,27 +862,31 @@ xViewer.prototype._initMouseEvents = function () {
             return;
         }
         if (event.type == 'rotate') {
-            switch (viewer.navigationMode) {
-                case 'free-orbit':
-                    navigate('free-orbit', event.deltaX, event.deltaY);
-                    break;
+            angle = (Math.atan2(event.deltaY, event.deltaX));
+            if (Math.abs(angle) > .2) {
+                console.log(angle);
+                switch (viewer.navigationMode) {
+                    case 'free-orbit':
+                        navigate('free-orbit', event.deltaX, event.deltaY);
+                        break;
 
-                case 'fixed-orbit':
-                case 'orbit':
-                    navigate('orbit', event.deltaX, event.deltaY);
-                    break;
+                    case 'fixed-orbit':
+                    case 'orbit':
+                        navigate('orbit', event.deltaX, event.deltaY);
+                        break;
 
-                case 'pan':
-                    navigate('pan', event.deltaX, event.deltaY);
-                    break;
+                    case 'pan':
+                        navigate('pan', event.deltaX, event.deltaY);
+                        break;
 
-                case 'zoom':
-                    navigate('zoom', event.deltaX, event.deltaY);
-                    break;
+                    case 'zoom':
+                        navigate('zoom', event.deltaX, event.deltaY);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
 
+                }
             }
         }
         if (event.type == 'pan') {
@@ -893,13 +896,13 @@ xViewer.prototype._initMouseEvents = function () {
     }
 
     function handleMouseScroll(event) {
-        if (event.type == "pinchin") {
-            navigate('zoom',  -2.0, -2.0);
+
+        if (event.additionalEvent == "pinchin") {
+            navigate('zoom', -.1, -.1);
 
         }
-        if (event.type == "pinchout") {
-            navigate('zoom', 2.0, 2.0);
-
+        if (event.additionalEvent == "pinchout") {
+            navigate('zoom', .1, .1);
         }
     }
 
@@ -976,10 +979,11 @@ xViewer.prototype._initMouseEvents = function () {
 
     //attach callbacks
     {
-        var mc=this.mc = new Hammer(this._canvas);
+        var mc = this.mc = new Hammer(this._canvas);
         mc.on("pan", handleMouseMove);
         mc.on("rotate", handleMouseMove);
-        TouchEmulator();
+        mc.on("pinch", handleMouseScroll);
+
         var pinch = new Hammer.Pinch();
         var rotate = new Hammer.Rotate();
         var pan = new Hammer.Pan();
@@ -992,8 +996,7 @@ xViewer.prototype._initMouseEvents = function () {
 
         // add to the Manager
         mc.add([pinch, rotate,pan]);
-        mc.on("rotate", handleMouseMove);
-        mc.on("pinch", handleMouseScroll);
+        //mc.on("rotate", handleMouseMove);
 
         //this._canvas.addEventListener('wheel', handleMouseScroll, true);
         //window.addEventListener('mousemove', handleMouseMove, true);

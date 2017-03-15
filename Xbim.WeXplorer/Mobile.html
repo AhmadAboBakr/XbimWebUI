@@ -3,10 +3,14 @@
 <!-- saved from url=(0014)about:internet -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <title>WeXplorer - xBIM Web Viewer</title>
     <link href="Libs/jquery-ui-styles/jquery-ui.min.css" rel="stylesheet"/>
     <link href="Resources/doctemplate/static/styles/xbrowser-styles.css" rel="stylesheet"/>
     <script src="Mobile/hammer.min.js"></script>
+    <script src="https://jsconsole.com/js/remote.js?9c5cccd4-f536-4b5d-a980-1aee12d59fad"></script>
 
     <script src="Libs/jquery.js"></script>
     <script src="Libs/jquery-ui.js"></script>
@@ -21,7 +25,6 @@
     <script src="Viewer/xbim-shaders.debug.js"></script>
     <script src="Viewer/xbim-state.debug.js"></script>
     <script src="Viewer/xbim-triangulated-shape.debug.js"></script>
-    <script src="https://cdn.rawgit.com/hammerjs/touchemulator/master/touch-emulator.js"></script>
     
     <script src="Viewer/xbim-viewer.debug.mobile.js"></script>
     <script src="Plugins/NavigationCube/xbim-navigation-cube-shaders.debug.js"></script>
@@ -39,10 +42,9 @@
     <script src="Browser/xbim-visual-templates.debug.js"></script>
     <script src="Browser/xbim-visual-assignment-set.debug.js"></script>
     <script src="browser.js"></script>
-    <script src="Mobile/MobileInput.js"></script>
 </head>
-<body>
-<div id="viewer-container">
+<body style="background:black">
+<div id="viewer-container" style="position:absolute;left:0;right:0px; width:100%">
     <canvas id="viewer-canvas"></canvas>
     <script>
         document.getElementById("viewer-canvas").width = Screen.width;

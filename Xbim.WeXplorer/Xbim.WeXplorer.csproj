@@ -115,7 +115,6 @@
     <Content Include="Libs\query-string.js" />
     <Content Include="Libs\webgl-utils.min.js" />
     <Content Include="Mobile\hammer.min.js" />
-    <Content Include="Mobile\MobileInput.js" />
     <Content Include="Plugins\NavigationCube\cube_fshader.c" />
     <Content Include="Plugins\NavigationCube\cube_vshader.c" />
     <Content Include="Plugins\NavigationCube\xbim-navigation-cube-shaders.debug.js" />
