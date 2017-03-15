@@ -856,40 +856,29 @@ xViewer.prototype._initMouseEvents = function () {
     }
 
     function handleMouseMove(event) {
-        if (!mouseDown) {
-            return;
-        }
 
         if (viewer.navigationMode == 'none') {
+            console.log("when");
+
             return;
         }
-
-        var newX = event.clientX;
-        var newY = event.clientY;
-
-        var deltaX = newX - lastMouseX;
-        var deltaY = newY - lastMouseY;
-
-        lastMouseX = newX;
-        lastMouseY = newY;
-
-        if (button == 'left') {
+        if (event.type == 'rotate') {
             switch (viewer.navigationMode) {
                 case 'free-orbit':
-                    navigate('free-orbit', deltaX, deltaY);
+                    navigate('free-orbit', event.deltaX, event.deltaY);
                     break;
 
                 case 'fixed-orbit':
                 case 'orbit':
-                    navigate('orbit', deltaX, deltaY);
+                    navigate('orbit', event.deltaX, event.deltaY);
                     break;
 
                 case 'pan':
-                    navigate('pan', deltaX, deltaY);
+                    navigate('pan', event.deltaX, event.deltaY);
                     break;
 
                 case 'zoom':
-                    navigate('zoom', deltaX, deltaY);
+                    navigate('zoom', event.deltaX, event.deltaY);
                     break;
 
                 default:
@@ -897,31 +886,21 @@ xViewer.prototype._initMouseEvents = function () {
 
             }
         }
-        if (button == 'middle') {
-            navigate('pan', deltaX, deltaY);
+        if (event.type == 'pan') {
+            navigate('pan', event.velocityX, event.velocityY);
         }
 
     }
 
     function handleMouseScroll(event) {
-        if (viewer.navigationMode == 'none') {
-            return;
-        }
-        if (event.stopPropagation) {
-            event.stopPropagation();
-        }
-        if (event.preventDefault) {
-            event.preventDefault();
-        }
-        function sign(x) {
-            x = +x // convert to a number
-            if (x === 0 || isNaN(x))
-                return x
-            return x > 0 ? 1 : -1
-        }
+        if (event.type == "pinchin") {
+            navigate('zoom',  -2.0, -2.0);
 
-        //deltaX and deltaY have very different values in different web browsers so fixed value is used for constant functionality.
-        navigate('zoom', sign(event.deltaX) * -1.0, sign(event.deltaY) * -1.0);
+        }
+        if (event.type == "pinchout") {
+            navigate('zoom', 2.0, 2.0);
+
+        }
     }
 
     function navigate(type, deltaX, deltaY) {
@@ -997,13 +976,30 @@ xViewer.prototype._initMouseEvents = function () {
 
     //attach callbacks
     {
-        this._canvas.addEventListener('mousedown', handleMouseDown, true);
-        this._canvas.addEventListener('wheel', handleMouseScroll, true);
-        window.addEventListener('mouseup', handleMouseUp, true);
-        window.addEventListener('mousemove', handleMouseMove, true);
-        this._canvas.addEventListener('mousemove', function () {
-            viewer._userAction = true;
-        }, true);
+        var mc=this.mc = new Hammer(this._canvas);
+        mc.on("pan", handleMouseMove);
+        mc.on("rotate", handleMouseMove);
+        TouchEmulator();
+        var pinch = new Hammer.Pinch();
+        var rotate = new Hammer.Rotate();
+        var pan = new Hammer.Pan();
+        
+
+        // we want to detect both the same time
+        pinch.recognizeWith(rotate);
+        pinch.recognizeWith(pan);
+        rotate.recognizeWith(pan);
+
+        // add to the Manager
+        mc.add([pinch, rotate,pan]);
+        mc.on("rotate", handleMouseMove);
+        mc.on("pinch", handleMouseScroll);
+
+        //this._canvas.addEventListener('wheel', handleMouseScroll, true);
+        //window.addEventListener('mousemove', handleMouseMove, true);
+        //this._canvas.addEventListener('mousemove', function () {
+        //    viewer._userAction = true;
+        //}, true);
         
     }
 

@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xbim.WeXplorer</RootNamespace>
     <AssemblyName>Xbim.WeXplorer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,6 +83,7 @@
     <Content Include="Build\xbim-viewer.debug.bundle.js" />
     <Content Include="Build\xbim-viewer.min.bundle.js" />
     <Content Include="Build\xbim-viewer.min.js" />
+    <Content Include="Mobile.html" />
     <Content Include="index.html" />
     <Content Include="Libs\gl-matrix.min.js" />
     <Content Include="Libs\jquery-ui-styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -112,6 +114,8 @@
     <Content Include="Libs\jstree-styles\throbber.gif" />
     <Content Include="Libs\query-string.js" />
     <Content Include="Libs\webgl-utils.min.js" />
+    <Content Include="Mobile\hammer.min.js" />
+    <Content Include="Mobile\MobileInput.js" />
     <Content Include="Plugins\NavigationCube\cube_fshader.c" />
     <Content Include="Plugins\NavigationCube\cube_vshader.c" />
     <Content Include="Plugins\NavigationCube\xbim-navigation-cube-shaders.debug.js" />
@@ -184,6 +188,7 @@
     <Content Include="Viewer\xbim-shaders.debug.js" />
     <Content Include="Viewer\xbim-state.debug.js" />
     <Content Include="Viewer\xbim-triangulated-shape.debug.js" />
+    <Content Include="Viewer\xbim-viewer.debug.mobile.js" />
     <Content Include="Viewer\xbim-viewer.debug.js" />
     <Content Include="tests\qunit-1.15.0.css" />
     <Content Include="tests\qunit-1.15.0.js" />

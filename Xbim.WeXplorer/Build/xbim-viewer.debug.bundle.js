@@ -2159,14 +2159,16 @@ xViewer.prototype._initMouseEvents = function () {
 
 
     //attach callbacks
-    this._canvas.addEventListener('mousedown', handleMouseDown, true);
-    this._canvas.addEventListener('wheel', handleMouseScroll, true);
-    window.addEventListener('mouseup', handleMouseUp, true);
-    window.addEventListener('mousemove', handleMouseMove, true);
-
-    this._canvas.addEventListener('mousemove', function() {
-        viewer._userAction = true;
-    }, true);
+    {
+        this._canvas.addEventListener('mousedown', handleMouseDown, true);
+        this._canvas.addEventListener('wheel', handleMouseScroll, true);
+        window.addEventListener('mouseup', handleMouseUp, true);
+        window.addEventListener('mousemove', handleMouseMove, true);
+        this._canvas.addEventListener('mousemove', function () {
+            viewer._userAction = true;
+        }, true);
+        
+    }
 
 
     /**
